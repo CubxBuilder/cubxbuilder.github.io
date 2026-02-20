@@ -231,29 +231,54 @@
     </div>
 </div>
 <script type="module">
-   async function fetchStatus() {
+async function fetchStatus() {
     const dot = document.getElementById('status-dot');
     const label = document.getElementById('status-text');
+    const container = document.getElementById('activities');
 
     try {
-        // Die URL muss exakt so aussehen:
+        // DER FIX: Kompletter Pfad mit /api/status und Cache-Buster ?t=
         const response = await fetch('https://kekse-clan-bot-xlx7.onrender.com' + Date.now());
         
-        if (!response.ok) throw new Error('API antwortet nicht');
+        if (!response.ok) throw new Error('API unreachable');
         
         const data = await response.json();
-        
-        if (data && ['online', 'dnd', 'idle'].includes(data.status)) {
+        console.log("Daten empfangen:", data);
+
+        // 1. Status-Dot & Text setzen
+        if (data.status && ['online', 'dnd', 'idle'].includes(data.status)) {
             dot.className = 'status-dot dot-online';
             label.innerText = 'SYSTEM ONLINE';
-            // Optional: Activity Text anhängen wenn vorhanden
-            if (data.activities && data.activities.length > 0) {
-                const mainAct = data.activities.find(a => a.type !== 4);
-                if (mainAct) label.innerText += ` | ${mainAct.name.toUpperCase()}`;
-            }
         } else {
             dot.className = 'status-dot';
             label.innerText = 'SYSTEM OFFLINE';
+        }
+
+        // 2. Aktivitäten (Spiele/Spotify) rendern
+        if (container) {
+            container.innerHTML = ""; // Container leeren
+            
+            if (data.activities && data.activities.length > 0) {
+                data.activities.forEach(act => {
+                    if (act.type === 4) return; // Custom Status (Text unter dem Namen) ignorieren
+
+                    const card = document.createElement('div');
+                    card.className = 'activity-card';
+                    
+                    // Icon bestimmen (Spotify Album Art oder Spiel-Icon)
+                    const iconSrc = act.image || 'https://cdn.discordapp.com';
+                    
+                    card.innerHTML = `
+                        <img src="${iconSrc}" class="activity-icon" onerror="this.src='https://cdn.discordapp.com'">
+                        <div class="activity-info">
+                            <span class="activity-name">${act.name}</span>
+                            <span class="activity-details">${act.details || ''}</span>
+                            <span class="activity-state">${act.state || ''}</span>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            }
         }
     } catch (error) {
         console.error("Fetch Fehler:", error);
@@ -262,7 +287,7 @@
     }
 }
 
-// Startet den Loop
+// Initialer Aufruf und Intervall alle 15 Sekunden
 fetchStatus();
 setInterval(fetchStatus, 15000);
 </script>
