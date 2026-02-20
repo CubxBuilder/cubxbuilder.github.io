@@ -136,6 +136,38 @@
             flex-direction: column;
             min-width: 0;
         }
+        .links-grid { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+
+        .link-card {
+            background: var(--accent-blue);
+            padding: 10px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-align: center;
+            transition: background 0.2s;
+        }
+
+        .link-card:hover { background: #4752c4; }
+
+        .discord-widget-box {
+            border-radius: 8px;
+            overflow: hidden;
+            background: #000;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.5;
+        }
         .act-name { color: var(--text-strong); font-size: 14px; font-weight: 600; }
         .act-details { color: var(--text-normal); font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .act-state { color: var(--text-normal); font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -158,18 +190,26 @@
                 <div class="display-name">CubeBuilder</div>
                 <div class="handle">cubxbuilder • he/him</div>
             </div>
-
             <div class="about-me">
                 <strong><span>Stell dir mal vor, man mag dich wie du bist, weil du bist wie du bist und nich sein musst wie man dich gerne hätte</span></strong>
             </div>
-
             <div class="divider"></div>
-
             <!-- Hier werden die Aktivitäten geladen -->
             <div id="activity-container" class="activity-section" style="display: none;">
                 <div class="activity-header">Aktuelle Aktivität</div>
                 <div id="activity-list"></div>
             </div>
+            <div class="links-grid">
+            <a href="https://github.com/CubxBuilder/" target="_blank" class="link-card">GITHUB REPOS</a>
+            <a href="https://replit.com/@fabianlehradt" target="_blank" class="link-card">REPLIT WORKSPACE</a>
+            <a href="https://discord.com/users/1151971830983311441" class="link-card">SEND MESSAGE</a>
+        </div>
+
+        <div class="discord-widget-box">
+            <iframe src="https://discord.com/widget?id=1423413347168157718&theme=dark" width="100%" height="300" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+        </div>
+
+        <footer>&copy; 2026 CUBEBUILDER // V 1.5.0</footer>
         </div>
     </div>
 </div>
