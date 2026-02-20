@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -6,190 +7,220 @@
     <title>Fabian Lehradt | CubeBuilder</title>
     <style>
         :root {
-            --bg-deep: #0a0514;
-            --glass-bg: rgba(18, 10, 35, 0.75);
-            --border-glow: #9d00ff;
-            --pink-accent: #ff00d4;
-            --text-main: #ffffff;
-            --text-muted: #b5a1d5;
-            --status-offline: #444;
+            /* Exakte Farben aus deinem Screenshot */
+            --bg-main: #0c0c1e; /* Tiefes Dunkelblau/Schwarz */
+            --profile-purple: #23214d; /* Die violette Kartenfarbe */
+            --accent-blue: #5865f2; /* Discord-Blurple */
             --status-online: #23a55a;
+            --text-main: #ffffff;
+            --text-muted: #b5bac1;
+            
+            /* Rollen-Farben aus dem Bild */
+            --role-admin: #c0392b;
+            --role-dev: #2ecc71;
+            --role-team: #9b59b6;
+            --role-booster: #f47fff;
         }
 
         * { box-sizing: border-box; }
 
         body {
-            background-color: var(--bg-deep);
+            background-color: var(--bg-main);
+            /* Subtiler Glow-Hintergrund wie im Discord-Nitro-Profil */
             background-image: 
-                radial-gradient(at 0% 0%, rgba(85, 0, 255, 0.2) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(255, 0, 212, 0.15) 0px, transparent 50%);
+                radial-gradient(at 0% 0%, rgba(88, 101, 242, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, rgba(147, 51, 234, 0.1) 0px, transparent 50%);
             color: var(--text-main);
-            font-family: 'Inter', -apple-system, sans-serif;
+            font-family: 'Inter', 'gg sans', 'Noto Sans', sans-serif;
             margin: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 40px 20px;
+            padding: 20px;
         }
 
         .profile-card {
-            max-width: 420px;
+            max-width: 400px;
             width: 100%;
-            background: var(--glass-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(157, 0, 255, 0.3);
-            border-radius: 28px;
-            padding: 45px 30px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 20px rgba(157, 0, 255, 0.15);
-            text-align: center;
+            background: var(--profile-purple);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
             position: relative;
         }
 
-        /* Status Badge Oben */
+        /* Banner Bereich oben */
+        .banner {
+            height: 120px;
+            background: linear-gradient(45deg, #1e1e3f, #3e3e7a);
+            position: relative;
+        }
+
         .status-header {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 5px 10px;
+            border-radius: 20px;
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 8px;
-            margin-bottom: 20px;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.7rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+            font-size: 0.65rem;
+            font-weight: bold;
+            font-family: monospace;
+            backdrop-filter: blur(4px);
         }
 
         .status-dot {
-            width: 8px; height: 8px;
+            width: 10px; height: 10px;
             border-radius: 50%;
-            background: var(--status-offline);
-            transition: 0.5s;
+            background: #444;
         }
 
         .dot-online { 
-            background: var(--status-online) !important; 
-            box-shadow: 0 0 10px var(--status-online);
+            background: var(--status-online); 
+            box-shadow: 0 0 8px var(--status-online);
             animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
-            0% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.3); opacity: 0.7; }
-            100% { transform: scale(1); opacity: 1; }
+            0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; }
+        }
+
+        .content {
+            padding: 60px 16px 20px 16px;
+            position: relative;
+        }
+
+        .avatar-container {
+            position: absolute;
+            top: -55px;
+            left: 16px;
+            border: 6px solid var(--profile-purple);
+            border-radius: 50%;
+            background: var(--profile-purple);
         }
 
         .avatar {
-            width: 110px; height: 110px;
+            width: 90px; height: 90px;
             border-radius: 50%;
-            margin: 0 auto 25px;
-            border: 2px solid var(--border-glow);
-            box-shadow: 0 0 25px var(--border-glow);
-            object-fit: cover;
             display: block;
+            object-fit: cover;
         }
 
-        h1 {
-            font-size: 1.8rem; margin: 0; font-weight: 800;
-            background: linear-gradient(to right, #fff, var(--text-muted));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        h1 { font-size: 1.25rem; margin: 0; display: flex; align-items: center; gap: 8px; }
+        .username { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 12px; display: block; }
+
+        .badges { display: flex; gap: 4px; margin-bottom: 16px; }
+        .badge { width: 22px; height: 22px; opacity: 0.9; }
+
+        .bio-box {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
         }
 
-        .tagline {
-            color: var(--pink-accent); font-family: 'Fira Code', monospace;
-            font-size: 0.85rem; margin-bottom: 25px; display: block;
-            text-transform: uppercase; letter-spacing: 2px;
-        }
-
-        .bio {
-            font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;
-            margin-bottom: 35px; font-style: italic;
-        }
-
-        .links-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 35px; }
+        .links-grid { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
 
         .link-card {
-            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 16px; border-radius: 16px; text-decoration: none; color: var(--text-main);
-            font-weight: 600; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: var(--accent-blue);
+            padding: 10px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-align: center;
+            transition: background 0.2s;
         }
 
-        .link-card:hover {
-            background: rgba(157, 0, 255, 0.25); border-color: var(--border-glow);
-            transform: translateY(-4px) scale(1.02);
-        }
+        .link-card:hover { background: #4752c4; }
 
-        .discord-section { border-radius: 20px; overflow: hidden; border: 1px solid rgba(157, 0, 255, 0.2); background: #000; margin-bottom: 25px; }
-        .discord-section iframe { display: block; width: 100%; }
+        .discord-widget-box {
+            border-radius: 8px;
+            overflow: hidden;
+            background: #000;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
 
         footer {
-            margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex; justify-content: space-between; align-items: center;
-            font-family: 'Fira Code', monospace; font-size: 0.65rem; color: #4a3b63;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.5;
         }
     </style>
 </head>
 <body>
 
 <div class="profile-card">
-    <div class="status-header">
-        <div id="status-dot" class="status-dot"></div>
-        <span id="status-text">Connecting...</span>
-        <span id="activity-text" style="color: var(--pink-accent); font-size: 0.65rem; margin-left: 5px; border-left: 1px solid #333; padding-left: 8px; display: none;"></span>
+    <div class="banner">
+        <div class="status-header">
+            <div id="status-dot" class="status-dot"></div>
+            <span id="status-text">Connecting...</span>
+        </div>
     </div>
 
-    <img class="avatar" src="https://cdn.discordapp.com/avatars/1151971830983311441/a_d0eb39ecb192b2393998832d08bac32f.webp?size=100" alt="CubeBuilder">
-    
-    <h1>Fabian Lehradt</h1>
-    <span class="tagline">CubeBuilder // Dev</span>
-    
-    <div class="bio">
-        "Stell dir mal vor, man mag dich wie du bist, weil du bist wie du bist und nich sein musst wie man dich gerne hätte..."
-    </div>
+    <div class="content">
+        <div class="avatar-container">
+            <img class="avatar" src="https://cdn.discordapp.com/avatars/1151971830983311441/a_d0eb39ecb192b2393998832d08bac32f.webp?size=100" alt="Fabian">
+        </div>
 
-    <div class="links-grid">
-        <a href="https://github.com/CubxBuilder/" target="_blank" class="link-card">GITHUB</a>
-        <a href="https://replit.com/@fabianlehradt" target="_blank" class="link-card">REPLIT</a>
-        <a href="https://www.w3profile.com/FabianLehradt/" target="_blank" class="link-card">W3PROFILE</a>
-        <a href="https://discord.com/users/1151971830983311441" target="_blank" class="link-card">DISCORD</a>
-    </div>
+        <h1>Fabian <img src="https://raw.githubusercontent.com" alt="Tag" width="20"></h1>
+        <span class="username">cubxbuilder • he/him 🍃 CODE</span>
 
-    <div class="discord-section">
-        <iframe src="https://discord.com/widget?id=1423413347168157718&theme=dark" height="400" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
-    </div>
+        <div class="bio-box">
+            "Stell dir mal vor, man mag dich wie du bist, weil du bist wie du bist und nich sein musst wie man dich gerne hätte..."
+        </div>
 
-    <footer>
-        <span>&copy; 2026 CUBEBUILDER</span>
-        <span>V 1.4.2</span>
-    </footer>
+        <div class="links-grid">
+            <a href="https://github.com/CubxBuilder/" target="_blank" class="link-card">GITHUB REPOS</a>
+            <a href="https://replit.com/@fabianlehradt" target="_blank" class="link-card">REPLIT WORKSPACE</a>
+            <a href="https://discord.com/users/1151971830983311441" class="link-card">SEND MESSAGE</a>
+        </div>
+
+        <div class="discord-widget-box">
+            <iframe src="https://discord.com/widget?id=1423413347168157718&theme=dark" width="100%" height="300" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+        </div>
+
+        <footer>&copy; 2026 CUBEBUILDER // V 1.5.0</footer>
+    </div>
 </div>
 
 <script>
    async function fetchStatus() {
     try {
-        // Nutze die EXAKTE URL deines Bots auf Render + /api/status
         const response = await fetch('https://kekse-clan-bot-xlx7.onrender.com/api/status');
         const data = await response.json();
         
         const dot = document.getElementById('status-dot');
         const label = document.getElementById('status-text');
-        const activityLabel = document.getElementById('activity-text'); // Falls du das Element hast
 
-        // Status setzen
-        dot.className = 'status-dot ' + (data.status || 'offline');
-        label.innerText = (data.status || 'OFFLINE').toUpperCase();
-
-        // Activity anzeigen (falls vorhanden)
-        if (data.activity && data.status !== 'offline') {
-            label.innerText += ` | DOING: ${data.activity.toUpperCase()}`;
+        if (['online', 'dnd', 'idle'].includes(data.status)) {
+            dot.className = 'status-dot dot-online';
+            label.innerText = 'SYSTEM ONLINE';
+            if (data.activity) {
+                label.innerText += ` | ${data.activity.toUpperCase()}`;
+            }
+        } else {
+            dot.className = 'status-dot';
+            label.innerText = 'SYSTEM OFFLINE';
         }
     } catch (error) {
-        document.getElementById('status-text').innerText = 'API OFFLINE';
+        document.getElementById('status-text').innerText = 'API ERROR';
     }
 }
 setInterval(fetchStatus, 15000);
 fetchStatus();
-
 </script>
 
 </body>
