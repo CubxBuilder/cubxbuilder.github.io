@@ -44,16 +44,17 @@
         .profile-card {
             max-width: 400px;
             width: 100%;
-            background: var(--profile-purple);
+            background-image: linear-gradient(var(--profile-purple), var(--profile-purple)), 
+                              linear-gradient(to bottom, #0069f3, #b300db);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+            border: 5px solid transparent;
             border-radius: 16px;
             overflow: hidden;
             box-shadow: 0 12px 40px rgba(0,0,0,0.6);
-            border: 5px solid;
-            border-image-source: linear-gradient(to bottom, #0069f3, #b300db);
-            border-image-slice: 1;
-            border-image-radius: 16px;
             position: relative;
         }
+
 
         /* Banner Bereich oben */
          .banner {
