@@ -238,7 +238,7 @@ async function fetchStatus() {
 
     try {
         // DER FIX: Kompletter Pfad mit /api/status und Cache-Buster ?t=
-        const response = await fetch('https://kekse-clan-bot-xlx7.onrender.com' + Date.now());
+        const response = await fetch('https://kekse-clan-bot-xlx7.onrender.com/' + Date.now());
         
         if (!response.ok) throw new Error('API unreachable');
         
