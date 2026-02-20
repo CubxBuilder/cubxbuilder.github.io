@@ -213,7 +213,6 @@
         </div>
     </div>
 </div>
-
 <script type="module">
 async function fetchStatus() {
     const dot = document.getElementById('status-dot');
@@ -223,47 +222,39 @@ async function fetchStatus() {
 
     try {
         const response = await fetch(`${API_URL}?t=${Date.now()}`);
-        
-        if (!response.ok) throw new Error('API antwortet nicht');
+        if (!response.ok) throw new Error('API offline');
         
         const data = await response.json();
 
-        // Status Punkt setzen (online = gruen)
-        if (['online', 'dnd', 'idle'].includes(data.status)) {
-            dot.classList.add('status-online');
-        } else {
-            dot.classList.remove('status-online');
-        }
+        // Status setzen
+        dot.className = 'status-dot';
+        if (data.status) dot.classList.add(`status-${data.status}`);
 
         // Aktivitäten rendern
         if (data.activities && data.activities.length > 0) {
-            const activities = data.activities.filter(a => a.type !== 4); // Custom Status ignorieren
-            if (activities.length > 0) {
-                actContainer.style.display = 'block';
-                actList.innerHTML = activities.map(act => `
-                    <div class="activity-card">
-                        <img class="activity-icon" src="${act.image || 'https://cdn.discordapp.com'}" onerror="this.src='https://cdn.discordapp.com'">
-                        <div class="activity-info">
-                            <span class="act-name">${act.name}</span>
-                            <span class="act-details">${act.details || ''}</span>
-                            <span class="act-state">${act.state || ''}</span>
-                        </div>
+            actList.innerHTML = data.activities.map(act => `
+                <div class="activity-card">
+                    ${act.assets ? `<img src="${act.assets.large_image_url}" class="activity-icon">` : ''}
+                    <div class="activity-info">
+                        <div class="act-name">${act.name}</div>
+                        <div class="act-details">${act.details || ''}</div>
+                        <div class="act-state">${act.state || ''}</div>
                     </div>
-                `).join('');
-            } else {
-                actContainer.style.display = 'none';
-            }
+                </div>
+            `).join('');
+            actContainer.style.display = 'block';
         } else {
             actContainer.style.display = 'none';
         }
-    } catch (e) {
-        console.error("Verbindungsfehler:", e);
-        if(dot) dot.classList.remove('status-online');
+    } catch (err) {
+        console.error("Fehler beim Laden des Status:", err);
+        dot.style.background = "#747f8d"; // Offline-Grau bei Fehler
     }
 }
 
+// Initial laden und alle 30 Sek. aktualisieren
 fetchStatus();
-setInterval(fetchStatus, 15000);
+setInterval(fetchStatus, 30000);
 </script>
 
 </body>
