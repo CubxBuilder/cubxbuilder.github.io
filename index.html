@@ -165,42 +165,31 @@
 </div>
 
 <script>
-    async function fetchStatus() {
-        try {
-            // WICHTIG: Nutze den /api/status Pfad
-            const response = await fetch('https://kekse-clan-bot-xlx7.onrender.com');
-            const data = await response.json();
-            
-            const dot = document.getElementById('status-dot');
-            const label = document.getElementById('status-text');
-            const activityLabel = document.getElementById('activity-text');
+   async function fetchStatus() {
+    try {
+        // Nutze die EXAKTE URL deines Bots auf Render + /api/status
+        const response = await fetch('https://kekse-clan-bot-xlx7.onrender.com');
+        const data = await response.json();
+        
+        const dot = document.getElementById('status-dot');
+        const label = document.getElementById('status-text');
+        const activityLabel = document.getElementById('activity-text'); // Falls du das Element hast
 
-            // Status Logik
-            if (['online', 'dnd', 'idle'].includes(data.status)) {
-                dot.className = 'status-dot dot-online';
-                label.innerText = 'System Online';
-                label.style.color = '#fff';
-            } else {
-                dot.className = 'status-dot';
-                label.innerText = 'System Offline';
-                label.style.color = '#444';
-            }
+        // Status setzen
+        dot.className = 'status-dot ' + (data.status || 'offline');
+        label.innerText = (data.status || 'OFFLINE').toUpperCase();
 
-            // Activity Logik
-            if (data.activity) {
-                activityLabel.innerText = `DOING: ${data.activity.toUpperCase()}`;
-                activityLabel.style.display = 'inline';
-            } else {
-                activityLabel.style.display = 'none';
-            }
-
-        } catch (error) {
-            document.getElementById('status-text').innerText = 'API Link Lost';
-            document.getElementById('activity-text').style.display = 'none';
+        // Activity anzeigen (falls vorhanden)
+        if (data.activity && data.status !== 'offline') {
+            label.innerText += ` | DOING: ${data.activity.toUpperCase()}`;
         }
+    } catch (error) {
+        document.getElementById('status-text').innerText = 'API OFFLINE';
     }
-    setInterval(fetchStatus, 15000);
-    fetchStatus();
+}
+setInterval(fetchStatus, 15000);
+fetchStatus();
+
 </script>
 
 </body>
