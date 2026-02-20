@@ -190,7 +190,7 @@
         <span class="username">cubxbuilder • he/him</span>
 
         <div class="bio-box">
-            "Stell dir mal vor, man mag dich wie du bist, weil du bist wie du bist und nich sein musst wie man dich gerne hätte..."
+            <b>Stell dir mal vor, man mag dich wie du bist, weil du bist wie du bist und nich sein musst wie man dich gerne hätte.</b>
         </div>
 
         <div class="links-grid">
@@ -218,13 +218,13 @@
 
         if (['online', 'dnd', 'idle'].includes(data.status)) {
             dot.className = 'status-dot dot-online';
-            label.innerText = 'SYSTEM ONLINE';
+            label.innerText = 'ONLINE';
             if (data.activity) {
                 label.innerText += ` | ${data.activity.toUpperCase()}`;
             }
         } else {
             dot.className = 'status-dot';
-            label.innerText = 'SYSTEM OFFLINE';
+            label.innerText = 'OFFLINE';
         }
     } catch (error) {
         document.getElementById('status-text').innerText = 'API ERROR';
