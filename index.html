@@ -12,6 +12,8 @@
             --pink-accent: #ff00d4;
             --text-main: #ffffff;
             --text-muted: #b5a1d5;
+            --status-offline: #444;
+            --status-online: #23a55a;
         }
 
         * { box-sizing: border-box; }
@@ -40,14 +42,45 @@
             border: 1px solid rgba(157, 0, 255, 0.3);
             border-radius: 28px;
             padding: 45px 30px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 
-                        0 0 20px rgba(157, 0, 255, 0.15);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 20px rgba(157, 0, 255, 0.15);
             text-align: center;
+            position: relative;
+        }
+
+        /* Status Badge Oben */
+        .status-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .status-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--status-offline);
+            transition: 0.5s;
+        }
+
+        .dot-online { 
+            background: var(--status-online) !important; 
+            box-shadow: 0 0 10px var(--status-online);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         .avatar {
-            width: 110px;
-            height: 110px;
+            width: 110px; height: 110px;
             border-radius: 50%;
             margin: 0 auto 25px;
             border: 2px solid var(--border-glow);
@@ -57,95 +90,54 @@
         }
 
         h1 {
-            font-size: 1.8rem;
-            margin: 0;
-            font-weight: 800;
-            letter-spacing: -0.5px;
+            font-size: 1.8rem; margin: 0; font-weight: 800;
             background: linear-gradient(to right, #fff, var(--text-muted));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
         .tagline {
-            color: var(--pink-accent);
-            font-family: 'Fira Code', monospace;
-            font-size: 0.85rem;
-            margin-bottom: 25px;
-            display: block;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            color: var(--pink-accent); font-family: 'Fira Code', monospace;
+            font-size: 0.85rem; margin-bottom: 25px; display: block;
+            text-transform: uppercase; letter-spacing: 2px;
         }
 
         .bio {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-            margin-bottom: 35px;
-            font-style: italic;
+            font-size: 0.9rem; color: var(--text-muted); line-height: 1.6;
+            margin-bottom: 35px; font-style: italic;
         }
 
-        .links-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 35px;
-        }
+        .links-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 35px; }
 
         .link-card {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 16px;
-            border-radius: 16px;
-            text-decoration: none;
-            color: var(--text-main);
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 16px; border-radius: 16px; text-decoration: none; color: var(--text-main);
+            font-weight: 600; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .link-card:hover {
-            background: rgba(157, 0, 255, 0.25);
-            border-color: var(--border-glow);
+            background: rgba(157, 0, 255, 0.25); border-color: var(--border-glow);
             transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
         }
 
-        .discord-section {
-            border-radius: 20px;
-            overflow: hidden;
-            border: 1px solid rgba(157, 0, 255, 0.2);
-            background: #000000;
-            margin-bottom: 25px;
-        }
+        .discord-section { border-radius: 20px; overflow: hidden; border: 1px solid rgba(157, 0, 255, 0.2); background: #000; margin-bottom: 25px; }
+        .discord-section iframe { display: block; width: 100%; }
 
-        .discord-section iframe {
-            display: block;
-            width: 100%;
-        }
         footer {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.65rem;
-            color: #4a3b63;
-        }
-
-        .status-badge {
-            background: rgba(0, 255, 157, 0.1);
-            color: #00ff9d;
-            padding: 3px 8px;
-            border-radius: 10px;
-            font-size: 0.6rem;
+            margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex; justify-content: space-between; align-items: center;
+            font-family: 'Fira Code', monospace; font-size: 0.65rem; color: #4a3b63;
         }
     </style>
 </head>
 <body>
 
 <div class="profile-card">
+    <!-- LIVE STATUS OBEN -->
+    <div class="status-header">
+        <div id="status-dot" class="status-dot"></div>
+        <span id="status-text">Connecting...</span>
+    </div>
+
     <img class="avatar" src="https://cdn.discordapp.com" alt="CubeBuilder">
     
     <h1>Fabian Lehradt</h1>
@@ -163,20 +155,39 @@
     </div>
 
     <div class="discord-section">
-        <iframe 
-            src="https://discord.com/widget?id=1423413347168157718&theme=dark" 
-            height="400" 
-            allowtransparency="true" 
-            frameborder="0" 
-            sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
-        </iframe>
+        <iframe src="https://discord.com/widget?id=1423413347168157718&theme=dark" height="400" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
     </div>
 
     <footer>
         <span>&copy; 2026 CUBEBUILDER</span>
-        <span class="status-badge">ONLINE</span>
+        <span>V 1.4.2</span>
     </footer>
 </div>
+
+<script>
+    async function fetchStatus() {
+        try {
+            const response = await fetch('kekse-clan-bot-xlx7.onrender.com/');
+            const data = await response.json();
+            const dot = document.getElementById('status-dot');
+            const label = document.getElementById('status-text');
+
+            if (data.status === 'online' || data.status === 'dnd' || data.status === 'idle') {
+                dot.classList.add('dot-online');
+                label.innerText = 'System Online';
+                label.style.color = '#fff';
+            } else {
+                dot.classList.remove('dot-online');
+                label.innerText = 'System Offline';
+                label.style.color = '#444';
+            }
+        } catch (error) {
+            document.getElementById('status-text').innerText = 'API Link Lost';
+        }
+    }
+    setInterval(fetchStatus, 15000);
+    fetchStatus();
+</script>
 
 </body>
 </html>
