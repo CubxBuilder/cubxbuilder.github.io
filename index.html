@@ -6,18 +6,23 @@
     <title>Fabian Lehradt | CubeBuilder</title>
     <style>
         :root {
-            --bg: #000000;
-            --card-bg: #0a0a0a;
-            --card-border: #1a1a1a;
-            --text: #ffffff;
-            --text-muted: #888888;
-            --accent: #0070f3;
+            --bg-deep: #0a0514;
+            --glass-bg: rgba(18, 10, 35, 0.75);
+            --border-glow: #9d00ff;
+            --pink-accent: #ff00d4;
+            --text-main: #ffffff;
+            --text-muted: #b5a1d5;
         }
+
         * { box-sizing: border-box; }
+
         body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-deep);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(85, 0, 255, 0.2) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(255, 0, 212, 0.15) 0px, transparent 50%);
+            color: var(--text-main);
+            font-family: 'Inter', -apple-system, sans-serif;
             margin: 0;
             display: flex;
             justify-content: center;
@@ -25,113 +30,139 @@
             min-height: 100vh;
             padding: 40px 20px;
         }
-        .profile-container {
-            max-width: 400px; /* Kompakter wie bei kaktus.is-a.dev */
+
+        .profile-card {
+            max-width: 420px;
             width: 100%;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(157, 0, 255, 0.3);
+            border-radius: 28px;
+            padding: 45px 30px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 
+                        0 0 20px rgba(157, 0, 255, 0.15);
             text-align: center;
         }
+
         .avatar {
-            width: 96px;
-            height: 96px;
+            width: 110px;
+            height: 110px;
             border-radius: 50%;
-            margin: 0 auto 20px;
-            border: 1px solid var(--card-border);
+            margin: 0 auto 25px;
+            border: 2px solid var(--border-glow);
+            box-shadow: 0 0 25px var(--border-glow);
             object-fit: cover;
             display: block;
         }
+
         h1 {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             margin: 0;
-            font-weight: 600;
+            font-weight: 800;
             letter-spacing: -0.5px;
+            background: linear-gradient(to right, #fff, var(--text-muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        .username {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-bottom: 24px;
+
+        .tagline {
+            color: var(--pink-accent);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            margin-bottom: 25px;
             display: block;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
-        .description {
-            font-size: 0.95rem;
+
+        .bio {
+            font-size: 0.9rem;
             color: var(--text-muted);
-            line-height: 1.5;
-            margin-bottom: 32px;
+            line-height: 1.6;
+            margin-bottom: 35px;
+            font-style: italic;
         }
-        .links {
+
+        .links-grid {
             display: flex;
             flex-direction: column;
             gap: 12px;
-            margin-bottom: 32px;
+            margin-bottom: 35px;
         }
+
         .link-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            padding: 14px;
-            border-radius: 12px;
-            text-decoration: none;
-            color: var(--text);
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .link-card:hover {
-            background: #ffffff;
-            color: #000000;
-            transform: translateY(-2px);
-        }
-        .discord-title {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: var(--text-muted);
-            margin-bottom: 12px;
-            text-align: center;
-        }
-        .discord-widget-wrapper {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 16px;
             border-radius: 16px;
-            overflow: hidden;
-            border: 1px solid var(--card-border);
-            background: var(--card-bg);
-            line-height: 0; /* Verhindert kleine Lücken unter dem Iframe */
+            text-decoration: none;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        /* Iframe Anpassung für volle Breite im Container */
-        .discord-widget-wrapper iframe {
-            width: 100%;
+
+        .link-card:hover {
+            background: rgba(157, 0, 255, 0.25);
+            border-color: var(--border-glow);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .discord-section {
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(157, 0, 255, 0.2);
+            background: #000000;
+            margin-bottom: 25px;
+        }
+
+        .discord-section iframe {
             display: block;
+            width: 100%;
         }
         footer {
-            margin-top: 40px;
-            font-size: 0.75rem;
-            color: #222;
-            letter-spacing: 0.5px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.65rem;
+            color: #4a3b63;
+        }
+
+        .status-badge {
+            background: rgba(0, 255, 157, 0.1);
+            color: #00ff9d;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.6rem;
         }
     </style>
 </head>
 <body>
 
-<div class="profile-container">
-    <img class="avatar" src="https://cdn.discordapp.com/avatars/1151971830983311441/a_d0eb39ecb192b2393998832d08bac32f.webp?size=96" alt="CubeBuilder Avatar">
+<div class="profile-card">
+    <img class="avatar" src="https://cdn.discordapp.com" alt="CubeBuilder">
     
     <h1>Fabian Lehradt</h1>
-    <span class="username">@CubeBuilder</span>
+    <span class="tagline">CubeBuilder // Dev</span>
     
-    <div class="description">
-        Developer & Technical Architect. <br>
-        Fokussiert auf saubere Lösungen und effiziente Infrastrukturen.
+    <div class="bio">
+        "Stell dir mal vor, man mag dich wie du bist, weil du bist wie du bist und nich sein musst wie man dich gerne hätte..."
     </div>
 
-    <div class="links">
-        <a href="https://github.com/CubxBuilder/" target="_blank" class="link-card">GitHub</a>
-        <a href="https://replit.com/@fabianlehradt" target="_blank" class="link-card">Replit</a>
-        <a href="https://www.w3profile.com/FabianLehradt/" target="_blank" class="link-card">W3Profile</a>
-        <a href="https://discord.com/users/1151971830983311441" target="_blank" class="link-card">Discord Contact</a>
+    <div class="links-grid">
+        <a href="https://github.com/CubxBuilder/" target="_blank" class="link-card">GITHUB</a>
+        <a href="https://replit.com/@fabianlehradt" target="_blank" class="link-card">REPLIT</a>
+        <a href="https://www.w3profile.com/FabianLehradt/" target="_blank" class="link-card">W3PROFILE</a>
+        <a href="https://discord.com/users/1151971830983311441" target="_blank" class="link-card">DISCORD</a>
     </div>
 
-    <div class="discord-title">Community Status</div>
-    <div class="discord-widget-wrapper">
+    <div class="discord-section">
         <iframe 
             src="https://discord.com/widget?id=1423413347168157718&theme=dark" 
             height="400" 
@@ -142,7 +173,8 @@
     </div>
 
     <footer>
-        &copy; 2026 CUBEBUILDER.SYS
+        <span>&copy; 2026 CUBEBUILDER</span>
+        <span class="status-badge">ONLINE</span>
     </footer>
 </div>
 
